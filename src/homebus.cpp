@@ -428,13 +428,13 @@ void homebus_publish(const char *msg) {
 
 void homebus_send_to(const char *uuid, const char *ddc, const char *msg) {
   size_t buf_len = sizeof(HOMEBUS_ENVELOPE) + strlen(msg) + 1;
-  size_t topic_len = sizeof("/v1.6/devices/") + SIZEOF_UUID + 1;
+  size_t topic_len = sizeof("home/") + SIZEOF_UUID + 1;
 
   char buf[buf_len];
   char topic[topic_len];
 
   if(homebus_state == HOMEBUS_STATE_OKAY) {
-    snprintf(topic, topic_len, "/v1.6/devices/%s", uuid);
+    snprintf(topic, topic_len, "home/%s", uuid);
     snprintf(buf, buf_len, HOMEBUS_ENVELOPE, msg);
 
     mqtt_publish(topic, buf, true);
